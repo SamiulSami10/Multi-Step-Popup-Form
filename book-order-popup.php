@@ -86,7 +86,32 @@ function handle_book_order()
 
     wp_mail($to, $subject, $message, $headers);
 
+
+
+
+
+    // Send Confirmation Email to Customer
+    $customer_email = $data['email'];
+    $customer_subject = 'Your Book Order Confirmation';
+
+    $customer_message = "
+    <h2>Thank You for Your Order!</h2>
+    <p>We’ve received your details. After review, we’ll process and ship your books to the address below:</p>
+    <table cellpadding='6' cellspacing='0' border='1' style='border-collapse: collapse;'>
+        <tr><th align='left'>Name</th><td>{$data['name']}</td></tr>
+        <tr><th align='left'>Phone</th><td>{$data['phone']}</td></tr>
+        <tr><th align='left'>Shipping Address</th><td>{$data['address']}</td></tr>
+        <tr><th align='left'>Book Quantity</th><td>{$data['qty']}</td></tr>
+        <tr><th align='left'>Shipping</th><td>{$data['shipping']} TK</td></tr>
+        <tr><th align='left'>Total Amount</th><td><strong>{$data['total']} TK</strong></td></tr>
+        <tr><th align='left'>bKash Txn ID</th><td>{$data['txn_id']}</td></tr>
+    </table>
+    <p style='margin-top:10px;'>If you have any questions, simply reply to this email.</p>
+";
+
+    wp_mail($customer_email, $customer_subject, $customer_message, $headers);
+
+
     // Add this line to send a response back to the frontend
     wp_send_json_success('Thank you! We’ve received your order.');
-
 }
