@@ -18,7 +18,40 @@ add_action('init', function () {
         'menu_icon' => 'dashicons-book',
         'supports' => ['title', 'editor'],
     ]);
+
+    add_action('admin_menu', function () {
+        remove_submenu_page('edit.php?post_type=book_order', 'post-new.php?post_type=book_order');
+    });
+
 });
+
+add_action('add_meta_boxes', function () {
+    add_meta_box(
+        'book_order_meta_box',
+        'Book Order Details',
+        'render_book_order_meta_box',
+        'book_order',
+        'normal',
+        'default'
+    );
+});
+
+function render_book_order_meta_box($post)
+{
+    $meta = get_post_meta($post->ID);
+
+    echo '<table class="widefat fixed striped">';
+    foreach ($meta as $key => $val) {
+        if (strpos($key, '_') === 0)
+            continue;
+        $label = ucwords(str_replace('_', ' ', $key));
+        $value = esc_html($val[0]);
+        echo "<tr><th style='width:180px;'>$label</th><td>$value</td></tr>";
+    }
+    echo '</table>';
+}
+
+
 
 
 add_action('wp_enqueue_scripts', function () {
@@ -36,6 +69,11 @@ add_action('wp_footer', function () {
     </script>
     <?php
 });
+
+add_action('admin_init', function () {
+    remove_post_type_support('book_order', 'editor');
+});
+
 
 add_action('wp_ajax_book_order_submit', 'handle_book_order');
 add_action('wp_ajax_nopriv_book_order_submit', 'handle_book_order');
@@ -115,3 +153,28 @@ function handle_book_order()
     // Add this line to send a response back to the frontend
     wp_send_json_success('Thank you! We’ve received your order.');
 }
+
+add_filter('manage_book_order_posts_columns', function ($columns) {
+    return [
+        'cb' => $columns['cb'],
+        'title' => 'Name',
+        'phone' => 'Phone',
+        'qty' => 'Qty',
+        'total' => 'Total',
+        'date' => 'Date',
+    ];
+});
+
+add_action('manage_book_order_posts_custom_column', function ($column, $post_id) {
+    switch ($column) {
+        case 'phone':
+            echo esc_html(get_post_meta($post_id, 'phone', true));
+            break;
+        case 'qty':
+            echo esc_html(get_post_meta($post_id, 'qty', true));
+            break;
+        case 'total':
+            echo esc_html(get_post_meta($post_id, 'total', true)) . ' TK';
+            break;
+    }
+}, 10, 2);
