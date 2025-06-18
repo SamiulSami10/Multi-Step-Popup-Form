@@ -1,20 +1,5 @@
-<form id="book-order-form">
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="text" name="phone" placeholder="Phone" required>
-  <input type="email" name="email" placeholder="Email" required>
-  <textarea name="address" placeholder="Shipping Address" required></textarea>
-
-  <input type="number" id="book_qty" name="qty" placeholder="Book Quantity" required>
-  <select id="shipping" name="shipping" required>
-    <option value="">Select Area</option>
-    <option value="70">Inside Dhaka (70tk)</option>
-    <option value="120">Outside Dhaka (120tk)</option>
-  </select>
-
-  <input type="text" id="total_amount" name="total" placeholder="Total Amount" readonly>
-
-  <img src="/wp-content/uploads/2025/05/bKash-QR-Code-e1748247843534.jpg" style="max-width:200px;" alt="bKash QR">
-  <input type="text" name="txn_id" placeholder="bKash Transaction ID" required>
-
-  <button type="submit">Submit Order</button>
-</form>
+.error-msg {
+  color: red;
+  font-size: 0.9em;
+  margin: -5px 0 10px 5px;
+}

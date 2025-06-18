@@ -5,50 +5,43 @@ function initBookOrderForm() {
     $('#step1').show();
     $('#step2').hide();
 
-    $('#next-step').off('click').on('click', function () {
+   $('#next-step').off('click').on('click', function () {
     let valid = true;
 
-    // Name: only letters and spaces
+    // Clear previous error messages
+    $('.error-msg').remove();
+
+    // Name validation
     const name = $('input[name="name"]');
     if (!/^[a-zA-Z\s]+$/.test(name.val().trim())) {
-        name.css('border', '1px solid red');
+        name.after('<div class="error-msg">Please enter a valid name (letters only).</div>');
         valid = false;
-    } else {
-        name.css('border', '');
     }
 
-    // Phone: only digits (10 to 15 digits recommended)
+    // Phone validation
     const phone = $('input[name="phone"]');
     if (!/^\d{10,15}$/.test(phone.val().trim())) {
-        phone.css('border', '1px solid red');
+        phone.after('<div class="error-msg">Enter a valid phone number (10–15 digits).</div>');
         valid = false;
-    } else {
-        phone.css('border', '');
     }
 
-    // Email: basic email pattern
+    // Email validation
     const email = $('input[name="email"]');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.val().trim())) {
-        email.css('border', '1px solid red');
+        email.after('<div class="error-msg">Enter a valid email address.</div>');
         valid = false;
-    } else {
-        email.css('border', '');
     }
 
-    // Address: required non-empty
+    // Address validation
     const address = $('textarea[name="address"]');
     if (address.val().trim() === '') {
-        address.css('border', '1px solid red');
+        address.after('<div class="error-msg">Address is required.</div>');
         valid = false;
-    } else {
-        address.css('border', '');
     }
 
     if (valid) {
         $('#step1').hide();
         $('#step2').show();
-    } else {
-        alert('Please fill in all fields correctly before continuing.');
     }
 });
 
