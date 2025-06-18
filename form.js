@@ -16,11 +16,19 @@ function initBookOrderForm() {
 });
 
     $('#qty, #shipping').off('input change').on('input change', function () {
-        let qty = parseInt($('#qty').val()) || 0;
-        let delivery = parseInt($('#shipping').val()) || 0;
-        let total = qty * 225 + delivery;
-        $('#total').val(total);
-    });
+    let qty = parseInt($('#qty').val()) || 0;
+    let delivery = parseInt($('#shipping').val()) || 0;
+    let total = qty * 225 + delivery;
+
+    $('#total').val(total);
+
+    // Update bKash amount text
+    const $bkashAmount = $('#dynamic-bkash-amount');
+    if ($bkashAmount.length) {
+        $bkashAmount.html(`<b>BDT ${total}</b>`);
+    }
+});
+
 
     $('#book-order-form').off('submit').on('submit', function (e) {
         e.preventDefault();
