@@ -71,7 +71,7 @@ function initBookOrderForm() {
         let formData = $(this).serialize();
         $.post(bookOrder.ajax_url, formData + '&action=book_order_submit', function (res) {
             if (res.success) {
-                $('#book-order-form').html('<p>' + res.data + '</p>');
+$('#book-order-form').html(res.data);
             }
         });
     });

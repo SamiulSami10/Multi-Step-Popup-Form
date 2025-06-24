@@ -325,7 +325,22 @@ function handle_book_order()
 
 
     // Add this line to send a response back to the frontend
-    wp_send_json_success('Thank you! We’ve received your order.');
+    wp_send_json_success('
+    <div style="
+        padding: 20px;
+        border: 2px solid #aef0af;
+        background-color: #f0fff5;
+        border-radius: 10px;
+        text-align: center;
+        font-family: Arial, sans-serif;
+    ">
+        <h2 style="color: #2e7d32;"> Order Received!</h2>
+        <p style="font-size: 16px; color: #333;">
+            Thank you! We’ve received your order successfully.<br>
+            You will get a confirmation email shortly.
+        </p>
+    </div>
+');
 }
 
 add_filter('manage_book_order_posts_columns', function ($columns) {
