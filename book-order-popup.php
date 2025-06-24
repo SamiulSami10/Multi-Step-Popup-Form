@@ -114,20 +114,102 @@ function handle_book_order()
     ];
 
     $message = '
-<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;">
-  <h2 style="color: #444;">📚 New Book Order Received</h2>
-  <table style="width: 100%; border-collapse: collapse;">
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Name:</strong></td><td>' . $data['name'] . '</td></tr>
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Phone:</strong></td><td>' . $data['phone'] . '</td></tr>
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Email:</strong></td><td>' . $data['email'] . '</td></tr>
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Address:</strong></td><td>' . $data['address'] . '</td></tr>
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Book Quantity:</strong></td><td>' . $data['qty'] . '</td></tr>
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Shipping:</strong></td><td>' . $data['shipping'] . ' TK</td></tr>
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Total:</strong></td><td><strong>' . $data['total'] . ' TK</strong></td></tr>
-    <tr><td style="padding: 8px;"><strong>bKash Txn ID:</strong></td><td>' . $data['txn_id'] . '</td></tr>
-  </table>
-  <p style="margin-top: 20px; font-size: 14px; color: #666;">You can review this order in your WordPress dashboard.</p>
-</div>';
+<div
+  style="
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+  "
+>
+  <div
+    style="
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 50px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    "
+  >
+    <div style="display: flex; justify-content: center; align-items: center">
+      <img
+        style="width: 30%"
+        src="https://faisalmustafa.me/wp-content/uploads/2023/01/Faisal-Mustafa.png"
+        alt=""
+      />
+    </div>
+    <h2 style="text-align: center">
+      📚 New Book Order Received for
+      <a
+        href="https://faisalmustafa.me/freelancing-at-fiverr"
+        style="color: #3c763d; text-decoration: none; font-weight: 700"
+        ;
+        >Freelancing On Fiverr!</a
+      >
+    </h2>
+    <p style="font-size: 15px">
+      A new book order has been received. After verifying the payment, please
+      proceed with shipping to the address below:
+    </p>
+
+    <table style="width: 100%; border-collapse: collapse">
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Name:</strong>
+        </td>
+        <td>' . $data['name'] . '</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Phone:</strong>
+        </td>
+        <td>' . $data['phone'] . '</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Email:</strong>
+        </td>
+        <td>' . $data['email'] . '</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Shipping Address:</strong>
+        </td>
+        <td>' . $data['address'] . '</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Book Quantity:</strong>
+        </td>
+        <td>' . $data['qty'] . '</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Shipping:</strong>
+        </td>
+        <td>' . $data['shipping'] . ' TK</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Total:</strong>
+        </td>
+        <td><strong>' . $data['total'] . ' TK</strong></td>
+      </tr>
+      <tr>
+        <td style="padding: 8px"><strong>bKash Txn ID:</strong></td>
+        <td>' . $data['txn_id'] . '</td>
+      </tr>
+    </table>
+
+    <p style="margin-top: 20px; font-size: 14px; color: #666">
+      Please review the details below and proceed with shipping after verifying
+      the payment.
+    </p>
+    <p style="font-size: 15px">Thank you.</p>
+  </div>
+  ';
+
 
     wp_mail($to, $subject, $message, $headers);
 
@@ -140,22 +222,103 @@ function handle_book_order()
     $customer_subject = 'Your Book Order Confirmation';
 
     $customer_message = '
-<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;">
-  <h2 style="color: #3c763d;">✅ Thank You for Your Order!</h2>
-  <p style="font-size: 15px;">We’ve received your order. After verifying the payment, we’ll ship your books to the following address:</p>
+<div
+  style="
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+  "
+>
+  <div
+    style="
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 50px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    "
+  >
+    <div style="display: flex; justify-content: center; align-items: center">
+      <img
+        style="width: 30%"
+        src="https://faisalmustafa.me/wp-content/uploads/2023/01/Faisal-Mustafa.png"
+        alt=""
+      />
+    </div>
+    <h2 style="text-align: center">
+      ✅ Thank You for Your Ordering
+      <a
+        href="https://faisalmustafa.me/freelancing-at-fiverr"
+        style="color: #3c763d; text-decoration: none; font-weight: 700"
+        ;
+        >Freelancing On Fiverr!</a
+      >
+    </h2>
+    <p style="font-size: 15px">
+      We’ve received your order. After verifying the payment, we’ll ship your
+      books to the following address:
+    </p>
 
-  <table style="width: 100%; border-collapse: collapse;">
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Name:</strong></td><td>' . $data['name'] . '</td></tr>
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Phone:</strong></td><td>' . $data['phone'] . '</td></tr>
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Shipping Address:</strong></td><td>' . $data['address'] . '</td></tr>
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Book Quantity:</strong></td><td>' . $data['qty'] . '</td></tr>
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Shipping:</strong></td><td>' . $data['shipping'] . ' TK</td></tr>
-    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Total:</strong></td><td><strong>' . $data['total'] . ' TK</strong></td></tr>
-    <tr><td style="padding: 8px;"><strong>bKash Txn ID:</strong></td><td>' . $data['txn_id'] . '</td></tr>
-  </table>
+    <table style="width: 100%; border-collapse: collapse">
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Name:</strong>
+        </td>
+        <td>' . $data['name'] . '</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Phone:</strong>
+        </td>
+        <td>' . $data['phone'] . '</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Email:</strong>
+        </td>
+        <td>' . $data['email'] . '</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Shipping Address:</strong>
+        </td>
+        <td>' . $data['address'] . '</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Book Quantity:</strong>
+        </td>
+        <td>' . $data['qty'] . '</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Shipping:</strong>
+        </td>
+        <td>' . $data['shipping'] . ' TK</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Total:</strong>
+        </td>
+        <td><strong>' . $data['total'] . ' TK</strong></td>
+      </tr>
+      <tr>
+        <td style="padding: 8px"><strong>bKash Txn ID:</strong></td>
+        <td>' . $data['txn_id'] . '</td>
+      </tr>
+    </table>
 
-  <p style="margin-top: 20px; font-size: 14px; color: #666;">If you have any questions, just reply to this email. We will be happy to help.</p>
-</div>';
+    <p style="margin-top: 20px; font-size: 14px; color: #666">
+      If you have any questions, just reply to this email. We will be happy to
+      help.
+    </p>
+    <p style="font-size: 15px">
+      Thank you.
+    </p>
+  </div>
+  ';
 
 
     wp_mail($customer_email, $customer_subject, $customer_message, $headers);
