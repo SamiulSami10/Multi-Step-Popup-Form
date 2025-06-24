@@ -55,6 +55,18 @@ function render_book_order_meta_box($post)
 
 
 add_action('wp_enqueue_scripts', function () {
+    wp_enqueue_script('intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js', [], null, true);
+    wp_enqueue_script('intl-tel-utils', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js', [], null, true);
+    // Enqueue intl-tel-input CSS
+    wp_enqueue_style(
+        'intl-tel-input-style',
+        'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.min.css',
+        [],
+        null
+    );
+
+
+
     wp_enqueue_script('book-order-script', plugin_dir_url(__FILE__) . 'form.js', ['jquery'], '1.0', true);
     wp_enqueue_style('book-order-style', plugin_dir_url(__FILE__) . 'style.css');
     wp_localize_script('book-order-script', 'bookOrder', [
@@ -89,12 +101,6 @@ function handle_book_order()
         'meta_input' => $data,
     ]);
 
-    // $message = "Name: {$data['name']}\nPhone: {$data['phone']}\nEmail: {$data['email']}\nAddress: {$data['address']}\nBooks: {$data['qty']}\nShipping: {$data['shipping']}\nTotal: {$data['total']}\nTxn ID: {$data['txn_id']}";
-
-    // wp_mail(get_option('admin_email'), 'New Book Order', $message);
-
-    // wp_send_json_success('Thank you! We’ve received your order.');
-
 
     // Send Email to Admin
     $to = 'samiul.pranto@viserx.net'; // ← Replace with your desired email
@@ -107,20 +113,21 @@ function handle_book_order()
         'From: Book Orders <contact@faisalmustafa.me>'
     ];
 
-    $message = "
-    <h2>New Book Order</h2>
-    <table cellpadding='6' cellspacing='0' border='1' style='border-collapse: collapse;'>
-        <tr><th align='left'>Name</th><td>{$data['name']}</td></tr>
-        <tr><th align='left'>Phone</th><td>{$data['phone']}</td></tr>
-        <tr><th align='left'>Email</th><td>{$data['email']}</td></tr>
-        <tr><th align='left'>Address</th><td>{$data['address']}</td></tr>
-        <tr><th align='left'>Book Quantity</th><td>{$data['qty']}</td></tr>
-        <tr><th align='left'>Shipping</th><td>{$data['shipping']} TK</td></tr>
-        <tr><th align='left'>Total Amount</th><td><strong>{$data['total']} TK</strong></td></tr>
-        <tr><th align='left'>bKash Txn ID</th><td>{$data['txn_id']}</td></tr>
-    </table>
-    <p style='margin-top:10px;'>Login to your dashboard to review this order.</p>
-";
+    $message = '
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;">
+  <h2 style="color: #444;">📚 New Book Order Received</h2>
+  <table style="width: 100%; border-collapse: collapse;">
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Name:</strong></td><td>' . $data['name'] . '</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Phone:</strong></td><td>' . $data['phone'] . '</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Email:</strong></td><td>' . $data['email'] . '</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Address:</strong></td><td>' . $data['address'] . '</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Book Quantity:</strong></td><td>' . $data['qty'] . '</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Shipping:</strong></td><td>' . $data['shipping'] . ' TK</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Total:</strong></td><td><strong>' . $data['total'] . ' TK</strong></td></tr>
+    <tr><td style="padding: 8px;"><strong>bKash Txn ID:</strong></td><td>' . $data['txn_id'] . '</td></tr>
+  </table>
+  <p style="margin-top: 20px; font-size: 14px; color: #666;">You can review this order in your WordPress dashboard.</p>
+</div>';
 
     wp_mail($to, $subject, $message, $headers);
 
@@ -132,20 +139,24 @@ function handle_book_order()
     $customer_email = $data['email'];
     $customer_subject = 'Your Book Order Confirmation';
 
-    $customer_message = "
-    <h2>Thank You for Your Order!</h2>
-    <p>We’ve received your details. After review, we’ll process and ship your books to the address below:</p>
-    <table cellpadding='6' cellspacing='0' border='1' style='border-collapse: collapse;'>
-        <tr><th align='left'>Name</th><td>{$data['name']}</td></tr>
-        <tr><th align='left'>Phone</th><td>{$data['phone']}</td></tr>
-        <tr><th align='left'>Shipping Address</th><td>{$data['address']}</td></tr>
-        <tr><th align='left'>Book Quantity</th><td>{$data['qty']}</td></tr>
-        <tr><th align='left'>Shipping</th><td>{$data['shipping']} TK</td></tr>
-        <tr><th align='left'>Total Amount</th><td><strong>{$data['total']} TK</strong></td></tr>
-        <tr><th align='left'>bKash Txn ID</th><td>{$data['txn_id']}</td></tr>
-    </table>
-    <p style='margin-top:10px;'>If you have any questions, simply reply to this email.</p>
-";
+    $customer_message = '
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;">
+  <h2 style="color: #3c763d;">✅ Thank You for Your Order!</h2>
+  <p style="font-size: 15px;">We’ve received your order. After verifying the payment, we’ll ship your books to the following address:</p>
+
+  <table style="width: 100%; border-collapse: collapse;">
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Name:</strong></td><td>' . $data['name'] . '</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Phone:</strong></td><td>' . $data['phone'] . '</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Shipping Address:</strong></td><td>' . $data['address'] . '</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Book Quantity:</strong></td><td>' . $data['qty'] . '</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Shipping:</strong></td><td>' . $data['shipping'] . ' TK</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Total:</strong></td><td><strong>' . $data['total'] . ' TK</strong></td></tr>
+    <tr><td style="padding: 8px;"><strong>bKash Txn ID:</strong></td><td>' . $data['txn_id'] . '</td></tr>
+  </table>
+
+  <p style="margin-top: 20px; font-size: 14px; color: #666;">If you have any questions, just reply to this email. We will be happy to help.</p>
+</div>';
+
 
     wp_mail($customer_email, $customer_subject, $customer_message, $headers);
 
