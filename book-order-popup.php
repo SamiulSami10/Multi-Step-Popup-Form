@@ -145,7 +145,7 @@ function handle_book_order()
         href="https://faisalmustafa.me/freelancing-at-fiverr"
         style="color: #3c763d; text-decoration: none; font-weight: 700"
         ;
-        >Freelancing On Fiverr!</a
+        >Freelancing at Fiverr!</a
       >
     </h2>
     <p style="font-size: 15px">
@@ -253,7 +253,7 @@ function handle_book_order()
         href="https://faisalmustafa.me/freelancing-at-fiverr"
         style="color: #3c763d; text-decoration: none; font-weight: 700"
         ;
-        >Freelancing On Fiverr!</a
+        >Freelancing at Fiverr!</a
       >
     </h2>
     <p style="font-size: 15px">
@@ -335,7 +335,7 @@ add_filter('manage_book_order_posts_columns', function ($columns) {
         'phone' => 'Phone',
         'qty' => 'Qty',
         'total' => 'Total',
-        'date' => 'Date',
+        // 'date' => 'Date',
     ];
 });
 
