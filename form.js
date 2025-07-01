@@ -51,14 +51,17 @@ function initBookOrderForm() {
     $('#step1').show();
 });
 
-    $('#qty, #shipping').off('input change').on('input change', function () {
+  $('#qty, #shipping').off('input change').on('input change', function () {
     let qty = parseInt($('#qty').val()) || 0;
     let delivery = parseInt($('#shipping').val()) || 0;
-    let total = qty * 225 + delivery;
 
-    $('#total').val(total);
+    let subtotal = qty * 225;
+    $('#subtotal').val(subtotal); // show book price only
 
-    // Update bKash amount text
+    let total = subtotal + delivery;
+    $('#total').val(total); // show full price
+
+    // Update bKash dynamic text
     const $bkashAmount = $('#dynamic-bkash-amount');
     if ($bkashAmount.length) {
         $bkashAmount.html(`<b>BDT ${total}</b>`);
@@ -66,12 +69,13 @@ function initBookOrderForm() {
 });
 
 
+
     $('#book-order-form').off('submit').on('submit', function (e) {
         e.preventDefault();
         let formData = $(this).serialize();
         $.post(bookOrder.ajax_url, formData + '&action=book_order_submit', function (res) {
             if (res.success) {
-                $('#book-order-form').html('<p>' + res.data + '</p>');
+$('#book-order-form').html(res.data);
             }
         });
     });
