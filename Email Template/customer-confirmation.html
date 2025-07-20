@@ -24,12 +24,12 @@
       />
     </div>
     <h2 style="text-align: center">
-      ✅ Thank You for Your Ordering
+      ✅ Thank You for Ordering
       <a
         href="https://faisalmustafa.me/freelancing-at-fiverr"
         style="color: #3c763d; text-decoration: none; font-weight: 700"
         ;
-        >Freelancing On Fiver!</a
+        >Freelancing at Fiverr!</a
       >
     </h2>
     <p style="font-size: 15px">
@@ -70,6 +70,13 @@
       </tr>
       <tr>
         <td style="padding: 8px; border-bottom: 1px solid #aef0af">
+          <strong>Book Subtotal:</strong>
+        </td>
+        <td>' . $book_subtotal . ' TK</td>
+      </tr>
+
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #aef0af">
           <strong>Shipping:</strong>
         </td>
         <td>' . $data['shipping'] . ' TK</td>
@@ -87,12 +94,28 @@
     </table>
 
     <p style="margin-top: 20px; font-size: 14px; color: #666">
-      If you have any questions, just reply to this email. We'll be happy to
+      If you have any questions, just reply to this email. We will be happy to
       help.
     </p>
-    <p style="font-size: 15px">
-      Thank you.
+    <p style="font-size: 15px">Thank you.</p>
+  </div>
+  '; wp_mail($customer_email, $customer_subject, $customer_message, $headers);
+  // Add this line to send a response back to the frontend
+  wp_send_json_success('
+  <div
+    style="
+      padding: 20px;
+      border: 2px solid #aef0af;
+      background-color: #f0fff5;
+      border-radius: 10px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    "
+  >
+    <h2 style="color: #2e7d32">Order Received!</h2>
+    <p style="font-size: 16px; color: #333">
+      Thank you! We’ve received your order successfully.<br />
+      You will get a confirmation email shortly .
     </p>
   </div>
-  ';
 </div>
